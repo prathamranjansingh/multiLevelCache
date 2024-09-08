@@ -36,4 +36,5 @@ console.log("Getting 'E' (not in cache)...");
 console.log("Value of E:", cache.get("E")); // Should fetch from main memory and insert into L1
 
 console.log("Final cache state:");
+console.log("Final cache state");
 cache.displayCache();
