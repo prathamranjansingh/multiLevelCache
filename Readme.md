@@ -1,6 +1,7 @@
 # Cache System
 
 This project implements a multilevel cache system using TypeScript. The cache system supports two eviction policies: LRU (Least Recently Used) and LFU (Least Frequently Used).
+NOTE: Different inputs are also there to check the working of this system. Those are commented in the index.ts So uncomment those lines and check other cases.
 
 ## Table of Contents
 
