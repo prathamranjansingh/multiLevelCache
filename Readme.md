@@ -5,7 +5,7 @@ NOTE: Different inputs are also there to check the working of this system. Those
 
 ## Table of Contents
 
-- [ProblemStatement](#ProblemStatement)
+- [Problem Statement](#ProblemStatement)
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
