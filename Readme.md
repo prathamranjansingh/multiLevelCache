@@ -40,18 +40,18 @@ To set up this project on your local machine, follow these steps:
 
 1. **Build the project:**
 
-Compile the TypeScript files to JavaScript using:
+   Compile the TypeScript files to JavaScript using:
 
-    ```bash
-    npm run build
-    ```
+   ```bash
+   npm run build
+   ```
 
 2. **Run the project:**
 
-Start the application using:
+   Start the application using:
 
-    ```bash
-    npm start
-    ```
+   ```bash
+   npm start
+   ```
 
 This will execute the compiled dist/index.js file.
