@@ -21,20 +21,20 @@ To set up this project on your local machine, follow these steps:
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/cache-system.git
+   git clone https://github.com/prathamranjansingh/multiLevelCache.git
    ```
 
 2. **Navigate to the project directory:**
 
-```bash
-cd cache-system
-```
+   ```bash
+   cd multiLevelCache
+   ```
 
 3. **Install dependencies:**
 
-```bash
-npm install
-```
+   ```bash
+   npm install
+   ```
 
 ## Usage
 
@@ -42,16 +42,16 @@ npm install
 
 Compile the TypeScript files to JavaScript using:
 
-```bash
-npm run build
-```
+    ```bash
+    npm run build
+    ```
 
 2. **Run the project:**
 
 Start the application using:
 
-```bash
-npm start
-```
+    ```bash
+    npm start
+    ```
 
 This will execute the compiled dist/index.js file.
