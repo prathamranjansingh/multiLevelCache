@@ -1,6 +1,6 @@
 import { EventEmitter } from "events";
 import { CacheLevel } from "./CacheLevel";
-import { CacheItem } from "./CacheItem"; // Import CacheItem
+import { CacheItem } from "./CacheItem";
 
 export class MultilevelCache extends EventEmitter {
   private levels: CacheLevel[];

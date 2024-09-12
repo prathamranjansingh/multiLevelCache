@@ -1,35 +1,37 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CacheLevel = void 0;
-class CacheLevel {
-    constructor(size, evictionPolicy) {
+var CacheLevel = /** @class */ (function () {
+    function CacheLevel(size, evictionPolicy) {
         this.cache = new Map();
         this.size = size;
         this.evictionPolicy = evictionPolicy;
     }
-    get(key) {
-        const item = this.cache.get(key);
+    CacheLevel.prototype.get = function (key) {
+        var item = this.cache.get(key);
         if (item) {
             item.lastAccessed = Date.now();
             item.frequency++;
             this.cache.set(key, item); // Update the item in the cache
         }
         return item;
-    }
-    put(key, value, frequency = 1, lastAccessed = Date.now()) {
-        let evictedItem = null;
+    };
+    CacheLevel.prototype.put = function (key, value, frequency, lastAccessed) {
+        if (frequency === void 0) { frequency = 1; }
+        if (lastAccessed === void 0) { lastAccessed = Date.now(); }
+        var evictedItem = null;
         if (this.cache.size >= this.size) {
             evictedItem = this.evict();
         }
         this.cache.set(key, {
-            key,
-            value,
-            frequency,
-            lastAccessed,
+            key: key,
+            value: value,
+            frequency: frequency,
+            lastAccessed: lastAccessed,
         });
         return evictedItem;
-    }
-    evict() {
+    };
+    CacheLevel.prototype.evict = function () {
         if (this.evictionPolicy === "LRU") {
             return this.evictLRU();
         }
@@ -39,27 +41,29 @@ class CacheLevel {
         else {
             throw new Error("Invalid eviction policy");
         }
-    }
-    evictLRU() {
-        let oldestAccess = Infinity;
-        let keyToEvict = null;
-        for (const [key, item] of this.cache.entries()) {
+    };
+    CacheLevel.prototype.evictLRU = function () {
+        var oldestAccess = Infinity;
+        var keyToEvict = null;
+        for (var _i = 0, _a = this.cache.entries(); _i < _a.length; _i++) {
+            var _b = _a[_i], key = _b[0], item = _b[1];
             if (item.lastAccessed < oldestAccess) {
                 oldestAccess = item.lastAccessed;
                 keyToEvict = key;
             }
         }
         if (keyToEvict) {
-            const evictedItem = this.cache.get(keyToEvict);
+            var evictedItem = this.cache.get(keyToEvict);
             this.cache.delete(keyToEvict);
             return evictedItem;
         }
         return null;
-    }
-    evictLFU() {
-        let lowestFrequency = Infinity;
-        let keyToEvict = null;
-        for (const [key, item] of this.cache.entries()) {
+    };
+    CacheLevel.prototype.evictLFU = function () {
+        var lowestFrequency = Infinity;
+        var keyToEvict = null;
+        for (var _i = 0, _a = this.cache.entries(); _i < _a.length; _i++) {
+            var _b = _a[_i], key = _b[0], item = _b[1];
             if (item.frequency < lowestFrequency) {
                 lowestFrequency = item.frequency;
                 keyToEvict = key;
@@ -72,30 +76,31 @@ class CacheLevel {
             }
         }
         if (keyToEvict) {
-            const evictedItem = this.cache.get(keyToEvict);
+            var evictedItem = this.cache.get(keyToEvict);
             this.cache.delete(keyToEvict);
             return evictedItem;
         }
         return null;
-    }
-    getSize() {
+    };
+    CacheLevel.prototype.getSize = function () {
         return this.size;
-    }
-    getEvictionPolicy() {
+    };
+    CacheLevel.prototype.getEvictionPolicy = function () {
         return this.evictionPolicy;
-    }
-    getContents() {
+    };
+    CacheLevel.prototype.getContents = function () {
         return new Map(this.cache);
-    }
-    isFull() {
+    };
+    CacheLevel.prototype.isFull = function () {
         return this.cache.size >= this.size;
-    }
-    remove(key) {
-        const item = this.cache.get(key);
+    };
+    CacheLevel.prototype.remove = function (key) {
+        var item = this.cache.get(key);
         if (item) {
             this.cache.delete(key);
         }
         return item;
-    }
-}
+    };
+    return CacheLevel;
+}());
 exports.CacheLevel = CacheLevel;

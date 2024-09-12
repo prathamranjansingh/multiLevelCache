@@ -1,29 +1,46 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MultilevelCache = void 0;
-const events_1 = require("events");
-const CacheLevel_1 = require("./CacheLevel");
-class MultilevelCache extends events_1.EventEmitter {
-    constructor() {
-        super();
-        this.levels = [];
+var events_1 = require("events");
+var CacheLevel_1 = require("./CacheLevel");
+var MultilevelCache = /** @class */ (function (_super) {
+    __extends(MultilevelCache, _super);
+    function MultilevelCache() {
+        var _this = _super.call(this) || this;
+        _this.levels = [];
+        return _this;
     }
-    addCacheLevel(size, evictionPolicy) {
+    MultilevelCache.prototype.addCacheLevel = function (size, evictionPolicy) {
         this.levels.push(new CacheLevel_1.CacheLevel(size, evictionPolicy));
         this.emit("cacheAdded", this.levels.length - 1);
-    }
-    removeCacheLevel(level) {
+    };
+    MultilevelCache.prototype.removeCacheLevel = function (level) {
         if (level < 0 || level >= this.levels.length) {
             throw new Error("Invalid cache level");
         }
         this.levels.splice(level, 1);
         this.emit("cacheRemoved", level);
-    }
-    get(key) {
-        let foundItem;
-        let foundLevel = -1;
-        for (let i = 0; i < this.levels.length; i++) {
-            const item = this.levels[i].get(key);
+    };
+    MultilevelCache.prototype.get = function (key) {
+        var foundItem;
+        var foundLevel = -1;
+        for (var i = 0; i < this.levels.length; i++) {
+            var item = this.levels[i].get(key);
             if (item) {
                 foundItem = item;
                 foundLevel = i;
@@ -31,8 +48,8 @@ class MultilevelCache extends events_1.EventEmitter {
             }
         }
         if (foundItem) {
-            for (let i = foundLevel - 1; i >= 0; i--) {
-                const evictedItem = this.levels[i].put(foundItem.key, foundItem.value, foundItem.frequency, foundItem.lastAccessed);
+            for (var i = foundLevel - 1; i >= 0; i--) {
+                var evictedItem = this.levels[i].put(foundItem.key, foundItem.value, foundItem.frequency, foundItem.lastAccessed);
                 if (evictedItem) {
                     this.cascadeEvictedItem(evictedItem, i + 1);
                 }
@@ -42,43 +59,44 @@ class MultilevelCache extends events_1.EventEmitter {
             }
             return foundItem.value;
         }
-        const value = `Value for ${key} (fetched from main memory)`;
+        var value = "Value for ".concat(key, " (fetched from main memory)");
         this.put(key, value);
         return value;
-    }
-    put(key, value) {
+    };
+    MultilevelCache.prototype.put = function (key, value) {
         if (this.levels.length === 0) {
             throw new Error("No cache levels available");
         }
-        const evictedItem = this.levels[0].put(key, value);
+        var evictedItem = this.levels[0].put(key, value);
         if (evictedItem) {
             this.cascadeEvictedItem(evictedItem, 1);
         }
-    }
-    cascadeEvictedItem(item, startLevel) {
-        for (let i = startLevel; i < this.levels.length; i++) {
+    };
+    MultilevelCache.prototype.cascadeEvictedItem = function (item, startLevel) {
+        for (var i = startLevel; i < this.levels.length; i++) {
             if (!this.levels[i].isFull()) {
                 this.levels[i].put(item.key, item.value, item.frequency, item.lastAccessed);
                 return;
             }
-            const nextEvictedItem = this.levels[i].put(item.key, item.value, item.frequency, item.lastAccessed);
+            var nextEvictedItem = this.levels[i].put(item.key, item.value, item.frequency, item.lastAccessed);
             if (!nextEvictedItem) {
                 return;
             }
             item = nextEvictedItem;
         }
-    }
-    displayCache() {
-        this.levels.forEach((level, index) => {
-            console.log(`Cache Level ${index + 1}:`);
-            console.log(`Size: ${level.getSize()}`);
-            console.log(`Eviction Policy: ${level.getEvictionPolicy()}`);
+    };
+    MultilevelCache.prototype.displayCache = function () {
+        this.levels.forEach(function (level, index) {
+            console.log("Cache Level ".concat(index + 1, ":"));
+            console.log("Size: ".concat(level.getSize()));
+            console.log("Eviction Policy: ".concat(level.getEvictionPolicy()));
             console.log("Contents:");
-            level.getContents().forEach((item, key) => {
-                console.log(`  ${key}: ${item.value} (freq: ${item.frequency}, last accessed: ${new Date(item.lastAccessed).toISOString()})`);
+            level.getContents().forEach(function (item, key) {
+                console.log("  ".concat(key, ": ").concat(item.value, " (freq: ").concat(item.frequency, ", last accessed: ").concat(new Date(item.lastAccessed).toISOString(), ")"));
             });
             console.log("---");
         });
-    }
-}
+    };
+    return MultilevelCache;
+}(events_1.EventEmitter));
 exports.MultilevelCache = MultilevelCache;

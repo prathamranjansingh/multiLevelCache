@@ -24,17 +24,17 @@ cache.put("D", "4"); // L1 full ho gaya, to B ko L2 mein bhej denge
 console.log("Cache state after putting 'D':");
 cache.displayCache(); // Dekho ab cache mein kya ho raha hai D ke baad
 
-console.log("C ko get karne ki koshish...");
+console.log("Getting the value of C.");
 console.log("Value of C:", cache.get("C")); // C ki value L1 se mil jayegi, 3
 
-console.log("Ab B ko wapas le rahe hain...");
-console.log("Value of B:", cache.get("B")); // B ab L2 mein hai, wapas L1 mein aa jayega
+// console.log("Ab B ko wapas le rahe hain...");
+// console.log("Value of B:", cache.get("B")); // B ab L2 mein hai, wapas L1 mein aa jayega
 
 console.log("Cache state after getting 'B':");
 cache.displayCache(); // B ko wapas laane ke baad cache ka haal dekhte hain
 
-console.log("E ko get kar rahe hain (jo cache mein hai hi nahi)...");
-console.log("Value of E:", cache.get("E")); // E to nahi hai cache mein, to main memory se uthayenge aur L1 mein daalenge
+// console.log("Getting E value...");
+// console.log("Value of E:", cache.get("E")); // E to nahi hai cache mein, to main memory se uthayenge aur L1 mein daalenge
 
 console.log("Final cache state:");
 cache.displayCache();
