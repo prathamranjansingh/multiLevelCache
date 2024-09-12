@@ -7,9 +7,6 @@ This project implements a multilevel cache system using TypeScript. The cache sy
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Testing](#testing)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
@@ -25,28 +22,36 @@ To set up this project on your local machine, follow these steps:
 
    ```bash
    git clone https://github.com/yourusername/cache-system.git
-   Navigate to the project directory:
    ```
 
-cd cache-system
-Install dependencies:
+2. **Navigate to the project directory:**
 
-bash
-Copy code
+```bash
+cd cache-system
+```
+
+3. **Install dependencies:**
+
+```bash
 npm install
-Usage
-Build the project:
+```
+
+## Usage
+
+1. **Build the project:**
 
 Compile the TypeScript files to JavaScript using:
 
-bash
-Copy code
+```bash
 npm run build
-Run the project:
+```
+
+2. **Run the project:**
 
 Start the application using:
 
-bash
-Copy code
+```bash
 npm start
+```
+
 This will execute the compiled dist/index.js file.
